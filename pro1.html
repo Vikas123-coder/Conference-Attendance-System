@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Event & Conference Attendance System</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family: Arial, sans-serif;
+    background:linear-gradient(to right,#141e30,#243b55);
+    color:white;
+}
+
+/* LOGIN PAGE */
+
+.login-page{
+    width:350px;
+    background:white;
+    color:black;
+    padding:30px;
+    margin:100px auto;
+    border-radius:15px;
+    text-align:center;
+    box-shadow:0px 0px 15px rgba(0,0,0,0.5);
+}
+
+.login-page h2{
+    margin-bottom:20px;
+    color:#0077cc;
+}
+
+.login-page input{
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border:1px solid gray;
+    border-radius:5px;
+}
+
+.login-page button{
+    width:100%;
+    padding:12px;
+    background:#0077cc;
+    color:white;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    font-size:16px;
+}
+
+.login-page button:hover{
+    background:#005fa3;
+}
+
+#message{
+    color:red;
+    margin-top:10px;
+}
+
+/* HOME PAGE */
+
+.home-page{
+    display:none;
+}
+
+header{
+    background:#0f172a;
+    padding:20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+header h1{
+    font-size:28px;
+}
+
+.admin-profile{
+    text-align:right;
+}
+
+.logout-btn{
+    background:red;
+    color:white;
+    padding:8px 15px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+/* BANNER */
+
+.event-banner{
+    background:url('https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=1200') center/cover;
+    height:250px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.event-banner h2{
+    background:rgba(0,0,0,0.6);
+    padding:20px;
+    border-radius:10px;
+    font-size:35px;
+}
+
+/* CONTAINER */
+
+.container{
+    width:95%;
+    margin:30px auto;
+}
+
+/* CARDS */
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+    margin-bottom:30px;
+}
+
+.card{
+    background:white;
+    color:black;
+    padding:20px;
+    border-radius:15px;
+    text-align:center;
+}
+
+.card h3{
+    margin-bottom:10px;
+    color:#0077cc;
+}
+
+/* REGISTER BOX */
+
+.register-box{
+    background:white;
+    color:black;
+    padding:20px;
+    border-radius:15px;
+    margin-bottom:25px;
+}
+
+.register-box h2{
+    margin-bottom:15px;
+    color:#0077cc;
+}
+
+.register-box input{
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border:1px solid gray;
+    border-radius:5px;
+}
+
+.register-box button{
+    background:#0077cc;
+    color:white;
+    padding:12px 20px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+/* TABLE */
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+    color:black;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+th{
+    background:#0077cc;
+    color:white;
+}
+
+th,td{
+    padding:12px;
+    text-align:center;
+    border:1px solid #ddd;
+}
+
+.present{
+    color:green;
+    font-weight:bold;
+}
+
+.absent{
+    color:red;
+    font-weight:bold;
+}
+
+button{
+    padding:8px 15px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    margin:2px;
+    color:white;
+}
+
+.present-btn{
+    background:green;
+}
+
+.absent-btn{
+    background:red;
+}
+
+.submit-all{
+    background:#ff9800;
+    margin-bottom:20px;
+    padding:12px 20px;
+    font-size:16px;
+}
+
+footer{
+    text-align:center;
+    padding:20px;
+    background:#0f172a;
+    margin-top:30px;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN PAGE -->
+
+<div class="login-page" id="loginPage">
+
+    <h2>Event Attendance Login</h2>
+
+    <input type="text" id="username" placeholder="Enter Username">
+
+    <input type="password" id="password" placeholder="Enter Password">
+
+    <button onclick="login()">Login</button>
+
+    <p id="message"></p>
+
+</div>
+
+<!-- HOME PAGE -->
+
+<div class="home-page" id="homePage">
+
+<header>
+
+    <h1>Conference Attendance System</h1>
+
+    <div class="admin-profile">
+        <p><b>Admin:</b> Vikas M S</p>
+        <p><b>Role:</b> Event Organizer</p>
+
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+
+</header>
+
+<!-- EVENT BANNER -->
+
+<div class="event-banner">
+    <h2>International Tech Conference 2026</h2>
+</div>
+
+<div class="container">
+
+    <!-- REGISTER FORM -->
+
+    <div class="register-box">
+
+        <h2>Register New Participant</h2>
+
+        <input type="text" id="participantName"
+        placeholder="Enter Participant Name">
+
+        <input type="text" id="participantEvent"
+        placeholder="Enter Event Name">
+
+        <button onclick="registerParticipant()">
+            Register Participant
+        </button>
+
+    </div>
+
+    <!-- CARDS -->
+
+    <div class="cards">
+
+        <div class="card">
+            <h3>Total Participants</h3>
+            <h1 id="totalCount">0</h1>
+        </div>
+
+        <div class="card">
+            <h3>Present Today</h3>
+            <h1 id="presentCount">0</h1>
+        </div>
+
+        <div class="card">
+            <h3>Absent Today</h3>
+            <h1 id="absentCount">0</h1>
+        </div>
+
+    </div>
+
+    <!-- SUBMIT BUTTON -->
+
+    <button class="submit-all" onclick="submitAllAttendance()">
+        Submit Attendance Report
+    </button>
+
+    <!-- TABLE -->
+
+    <table id="attendanceTable">
+
+        <tr>
+            <th>ID</th>
+            <th>Participant Name</th>
+            <th>Event</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+
+    </table>
+
+</div>
+
+<footer>
+    © 2026 Event & Conference Attendance System
+</footer>
+
+</div>
+
+<script>
+
+/* LOGIN */
+
+function login(){
+
+    let username = document.getElementById("username").value;
+
+    let password = document.getElementById("password").value;
+
+    if(username === "admin" && password === "1234"){
+
+        document.getElementById("loginPage").style.display = "none";
+
+        document.getElementById("homePage").style.display = "block";
+    }
+    else{
+
+        document.getElementById("message").innerHTML =
+        "Invalid Username or Password";
+    }
+}
+
+/* LOGOUT */
+
+function logout(){
+
+    document.getElementById("homePage").style.display = "none";
+
+    document.getElementById("loginPage").style.display = "block";
+
+    document.getElementById("username").value = "";
+
+    document.getElementById("password").value = "";
+}
+
+/* REGISTER PARTICIPANT */
+
+let participantId = 1;
+
+function registerParticipant(){
+
+    let name = document.getElementById("participantName").value;
+
+    let eventName =
+    document.getElementById("participantEvent").value;
+
+    if(name === "" || eventName === ""){
+
+        alert("Please Enter All Details");
+
+        return;
+    }
+
+    let table = document.getElementById("attendanceTable");
+
+    let row = table.insertRow();
+
+    row.innerHTML = `
+
+        <td>${participantId}</td>
+
+        <td>${name}</td>
+
+        <td>${eventName}</td>
+
+        <td class="status absent">Absent</td>
+
+        <td>
+
+            <button class="present-btn"
+            onclick="markPresent(this)">
+                Present
+            </button>
+
+            <button class="absent-btn"
+            onclick="markAbsent(this)">
+                Absent
+            </button>
+
+        </td>
+    `;
+
+    participantId++;
+
+    document.getElementById("participantName").value = "";
+
+    document.getElementById("participantEvent").value = "";
+
+    updateCounts();
+}
+
+/* MARK PRESENT */
+
+function markPresent(button){
+
+    let row = button.parentNode.parentNode;
+
+    let status = row.querySelector(".status");
+
+    status.innerHTML = "Present";
+
+    status.className = "status present";
+
+    updateCounts();
+}
+
+/* MARK ABSENT */
+
+function markAbsent(button){
+
+    let row = button.parentNode.parentNode;
+
+    let status = row.querySelector(".status");
+
+    status.innerHTML = "Absent";
+
+    status.className = "status absent";
+
+    updateCounts();
+}
+
+/* UPDATE COUNTS */
+
+function updateCounts(){
+
+    let present =
+    document.querySelectorAll(".present").length;
+
+    let absent =
+    document.querySelectorAll(".absent").length;
+
+    let total = present + absent;
+
+    document.getElementById("presentCount").innerHTML =
+    present;
+
+    document.getElementById("absentCount").innerHTML =
+    absent;
+
+    document.getElementById("totalCount").innerHTML =
+    total;
+}
+
+/* SUBMIT ATTENDANCE */
+
+function submitAllAttendance(){
+
+    let rows = document.querySelectorAll("#attendanceTable tr");
+
+    let output = "Conference Attendance Report\n\n";
+
+    for(let i = 1; i < rows.length; i++){
+
+        let name = rows[i].cells[1].innerHTML;
+
+        let event = rows[i].cells[2].innerHTML;
+
+        let status =
+        rows[i].querySelector(".status").innerHTML;
+
+        output +=
+        "Name : " + name +
+        "\nEvent : " + event +
+        "\nStatus : " + status +
+        "\n-------------------\n";
+    }
+
+    alert(output);
+}
+
+</script>
+
+</body>
+</html>
